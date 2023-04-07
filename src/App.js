@@ -1,25 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import './App.css';
+import { Route, Routes } from "react-router-dom";
+import { initializeApp } from "./redux/App-reducer"
+import Navbar from './components/Navbar/Navbar';
+
+import DialogsContainer from './components/Dialogs/DialogsContainer';
+import UsersContainer from './components/Users/UsersContainer';
+import ProfileContainer, { withRouter } from './components/Profile/ProfileContainer';
+import HeaderContainer from './components/Header/HeaderContainer';
+import LoginPage from './components/LoginPage/LoginPage';
+import React from 'react';
+import { connect } from 'react-redux';
+import Preloader from './components/common/Preloader/Preloader';
+
+
+class App extends React.Component {
+  componentDidMount() {
+    this.props.initializeApp()
+  }
+
+
+  render() {
+    if (!this.props.initialazed) {
+      return <Preloader />
+    }
+
+    return (
+      <div className="app-wrapper">
+        <HeaderContainer />
+        <Navbar />
+        <div className='app-wrapper-content'>
+          <Routes>
+            <Route path="/profile/:userId?" element={<ProfileContainer />} />
+            <Route path="/dialogs" element={<DialogsContainer />} />
+            <Route path="/users" element={<UsersContainer />} />
+            <Route path="/users" element={<UsersContainer />} />
+            <Route path="/login" element={<LoginPage />} />
+          </Routes>
+        </div>
+      </div>
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  initialazed: state.app.initialazed
+})
+
+export default withRouter(connect(mapStateToProps, { initializeApp })(App));

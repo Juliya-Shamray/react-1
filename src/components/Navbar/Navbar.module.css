@@ -1,0 +1,43 @@
+.nav {
+    grid-area: navig;
+    background-color: rgb(42, 41, 41);
+}
+
+.list {
+    list-style: none;
+    padding: 10px;
+    margin-bottom: 50px;
+}
+
+.item a {
+    color: white;
+    text-decoration: none;
+}
+
+.item a.active {
+    color: cadetblue;
+}
+
+.item a:hover {
+    text-decoration: underline;
+}
+
+.item {
+    margin-bottom: 15px;
+}
+
+.item:last-child {
+    margin-top: 70px;
+}
+
+.friends {
+    text-align: center;
+    color: white;
+}
+
+.friendsList {
+    padding: 10px;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+}
